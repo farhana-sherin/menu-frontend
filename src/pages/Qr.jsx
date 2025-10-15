@@ -7,10 +7,8 @@ export const ShowMenuQR = () => {
   useEffect(() => {
     const fetchQR = async () => {
       try {
-        // ✅ Check that your .env variable is being loaded
         console.log("API Base URL:", import.meta.env.VITE_API_BASE_URL);
 
-        // ✅ Optional: fallback if .env not loaded
         const baseUrl =
           import.meta.env.VITE_API_BASE_URL ||
           "https://menu-backend-1-x8un.onrender.com";
@@ -34,17 +32,24 @@ export const ShowMenuQR = () => {
     fetchQR();
   }, []);
 
+  // ✅ Redirect automatically when menuUrl is available
+  useEffect(() => {
+    if (menuUrl) {
+      window.location.href = menuUrl;
+    }
+  }, [menuUrl]);
+
   if (!qrBase64) return <p>Loading QR code...</p>;
 
   return (
     <div className="flex flex-col items-center justify-center min-h-screen bg-gray-50">
-      <h2 className="text-2xl font-semibold mb-4">Scan QR to see the menu</h2>
+      <h2 className="text-2xl font-semibold mb-4">Redirecting to menu...</h2>
       <img
         src={`data:image/png;base64,${qrBase64}`}
         alt="Menu QR"
         className="w-64 h-64 border rounded-xl shadow-md"
       />
-      <p className="mt-4 text-blue-600">{menuUrl}</p>
+      <p className="mt-4 text-gray-500">If you are not redirected automatically, <a href={menuUrl} className="text-blue-600 underline">click here</a>.</p>
     </div>
   );
 };
