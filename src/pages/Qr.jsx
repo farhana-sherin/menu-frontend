@@ -7,9 +7,15 @@ export const ShowMenuQR = () => {
   useEffect(() => {
     const fetchQR = async () => {
       try {
-        const response = await fetch(
-          `${import.meta.env.VITE_API_BASE_URL}/api/v1/customer/qr-pdf/`
-        );
+        // ✅ Check that your .env variable is being loaded
+        console.log("API Base URL:", import.meta.env.VITE_API_BASE_URL);
+
+        // ✅ Optional: fallback if .env not loaded
+        const baseUrl =
+          import.meta.env.VITE_API_BASE_URL ||
+          "https://menu-backend-1-x8un.onrender.com";
+
+        const response = await fetch(`${baseUrl}/api/v1/customer/qr-pdf/`);
 
         if (!response.ok) {
           const text = await response.text();
