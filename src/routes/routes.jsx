@@ -12,18 +12,12 @@ import Home from "../pages/home";
 
 
   export const router = createBrowserRouter([
-    {
-      path: "/",
-      element: <MainLayout/>,
-      children: [
-        {
-          path:"/home",
-          element:<Home/>
-        },
-        {
-          path:"/",
-          element:<ShowMenuQR/>
-        },
-      ],
-    },
-  ]);
+  {
+    path: "/",
+    element: <MainLayout />,
+    children: [
+      { path: "home", element: <Home /> }, // remove leading slash
+      { index: true, element: <ShowMenuQR /> }, // "/" route
+    ],
+  },
+]);
